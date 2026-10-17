@@ -1,5 +1,10 @@
 rootProject.name = "DnDquedamos"
 
+// Detecta los cores de la máquina actual y se los asigna a Gradle en tiempo de ejecución
+val cores = Runtime.getRuntime().availableProcessors()
+gradle.startParameter.maxWorkerCount = cores
+
+
 pluginManagement {
     repositories {
         google {
