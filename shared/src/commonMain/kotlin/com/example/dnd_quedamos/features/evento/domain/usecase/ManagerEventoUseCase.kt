@@ -1,4 +1,4 @@
-package com.example.dnd_quedamos.features.evento.domain.usercase
+package com.example.dnd_quedamos.features.evento.domain.usecase
 
 
 import com.example.dnd_quedamos.features.evento.data.repository.RepositoryEvento

@@ -13,9 +13,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.dnd_quedamos.features.evento.domain.model.DataEvento
-import com.example.dnd_quedamos.features.evento.domain.usercase.ManagerEventoUseCase
+import com.example.dnd_quedamos.features.evento.domain.usecase.ManagerEventoUseCase
 import com.example.dnd_quedamos.features.evento.presentation.EventoViewModel
 
 data class Objeto(

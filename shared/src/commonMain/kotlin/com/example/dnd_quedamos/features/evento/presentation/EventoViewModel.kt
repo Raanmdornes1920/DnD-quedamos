@@ -3,15 +3,12 @@ package com.example.dnd_quedamos.features.evento.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dnd_quedamos.features.evento.domain.model.DataEvento
-import com.example.dnd_quedamos.features.evento.domain.usercase.ManagerEventoUseCase
+import com.example.dnd_quedamos.features.evento.domain.usecase.ManagerEventoUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlin.collections.copy
-import kotlin.random.Random
-import kotlin.time.Clock
 
 data class EventoUiState(
     val dataEventos: List<DataEvento>,
