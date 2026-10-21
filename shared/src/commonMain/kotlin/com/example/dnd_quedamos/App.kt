@@ -53,6 +53,8 @@ fun App() {
         colorScheme = darkColorScheme() // DnD = dark fantasy vibe
     ) {
         Scaffold(
+            modifier =Modifier
+                .fillMaxWidth(),
             topBar = {
                 CenterAlignedTopAppBar(
                     title = {
@@ -66,7 +68,10 @@ fun App() {
 
             bottomBar = {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding()
+                        .padding(8.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     BottomNavButton(emoji = "🏠", label = "Inicio", selected = true) { }
