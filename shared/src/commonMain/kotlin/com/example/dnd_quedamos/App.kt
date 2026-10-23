@@ -13,8 +13,16 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHost
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.dnd_quedamos.di.AppContainer
+import com.example.dnd_quedamos.di.DefaultAppContainer
 import com.example.dnd_quedamos.features.evento.domain.usecase.ManagerEventoUseCase
 import com.example.dnd_quedamos.features.evento.presentation.EventoViewModel
+import com.example.dnd_quedamos.features.evento.ui.HomeEventViewRoot
 
 data class Objeto(
     val id: Int,
@@ -47,8 +55,18 @@ fun BottomNavButton(
     }
 }
 @Composable
-@Preview
-fun App() {
+fun App( appContainer: AppContainer = DefaultAppContainer() ) {
+    val navController = rememberNavController();
+
+    NavHost(navController = navController, startDestination = Route.Home) {
+        composable<Route.Home> {
+            val viewModel = remember {
+                EventoViewModel(appContainer.useManagerEventoUseCase)
+            }
+            HomeEventViewRoot(/* viewModel = ... , onButtonClick = { navController.navigate(Route...) }   */)
+        }
+    }
+
     MaterialTheme(
         colorScheme = darkColorScheme() // DnD = dark fantasy vibe
     ) {

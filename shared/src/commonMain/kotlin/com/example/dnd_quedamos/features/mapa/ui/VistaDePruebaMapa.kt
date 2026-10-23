@@ -1,4 +1,7 @@
 package com.example.dnd_quedamos.features.mapa.ui
 
-class VistaDePruebaMapa {
+import androidx.compose.runtime.Composable
+
+@Composable
+fun VistaDePruebaMapa() {
 }
