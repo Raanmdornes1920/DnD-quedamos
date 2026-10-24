@@ -1,19 +1,17 @@
 package com.example.dnd_quedamos
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,6 +21,8 @@ import com.example.dnd_quedamos.di.DefaultAppContainer
 import com.example.dnd_quedamos.features.evento.domain.usecase.ManagerEventoUseCase
 import com.example.dnd_quedamos.features.evento.presentation.EventoViewModel
 import com.example.dnd_quedamos.features.evento.ui.HomeEventViewRoot
+import com.example.dnd_quedamos.features.mapa.presentation.MapaViewModel
+import com.example.dnd_quedamos.features.mapa.ui.VistaDePruebaMapa
 
 data class Objeto(
     val id: Int,
@@ -47,7 +47,7 @@ fun BottomNavButton(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            //.clickable(onClick = onClick)
+            .clickable(onClick = onClick)
             .padding(8.dp)
     ) {
         Text(emoji, fontSize = 20.sp)
@@ -58,14 +58,7 @@ fun BottomNavButton(
 fun App( appContainer: AppContainer = DefaultAppContainer() ) {
     val navController = rememberNavController();
 
-    NavHost(navController = navController, startDestination = Route.Home) {
-        composable<Route.Home> {
-            val viewModel = remember {
-                EventoViewModel(appContainer.useManagerEventoUseCase)
-            }
-            HomeEventViewRoot(/* viewModel = ... , onButtonClick = { navController.navigate(Route...) }   */)
-        }
-    }
+
 
     MaterialTheme(
         colorScheme = darkColorScheme() // DnD = dark fantasy vibe
@@ -92,9 +85,22 @@ fun App( appContainer: AppContainer = DefaultAppContainer() ) {
                         .padding(8.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    BottomNavButton(emoji = "🏠", label = "Inicio", selected = true) { }
+                    BottomNavButton(emoji = "🏠", label = "Inicio", selected = true) {
+                        navController.navigate(Route.Home) {
+                            popUpTo(Route.Home) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    }
                     BottomNavButton(emoji = "🧙", label = "Personajes", selected = false) { }
                     BottomNavButton(emoji = "📜", label = "Partidas", selected = false) { }
+                    BottomNavButton(emoji = "\uD83C\uDF0E", label = "Mapa", selected = false) {
+                        navController.navigate(Route.MainMap) {
+                            // Opcional para evitar acumular decenas de pantallas al saltar de pestaña:
+                            popUpTo(Route.Home) { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
                     BottomNavButton(emoji = "⚙️", label = "Ajustes", selected = false) { }
                 }
             }
@@ -102,41 +108,19 @@ fun App( appContainer: AppContainer = DefaultAppContainer() ) {
 
 
         ) { innerPadding ->
-            EventoScreen(modifier = Modifier.padding(innerPadding))
-        }
-    }
-}
-
-// Use the 'viewModel()' function from the lifecycle-viewmodel-compose artifact
-@Composable
-fun EventoScreen(
-    modifier: Modifier = Modifier,
-    viewModel: EventoViewModel = EventoViewModel(ManagerEventoUseCase())
-) {
-    // 1. Inicializa el ViewModel de forma segura una sola vez
-    LaunchedEffect(Unit) {
-        viewModel.inicializar()
-    }
-
-    // 2. Observa el estado de la UI de manera reactiva
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-    // 3. Pintamos la lista directamente aquí dentro de la función Composable
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        items(uiState.dataEventos) { evento ->
-            Card(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    // Ajusta estos campos según las propiedades reales de tu clase 'DataEvento'
-                    Text(evento.nombre, fontWeight = FontWeight.Bold)
-                    Text(evento.descripcion, fontSize = 14.sp)
+            NavHost(navController = navController,
+                startDestination = Route.Home,
+                modifier = Modifier.padding(innerPadding)) {
+                composable<Route.Home> {
+                    HomeEventViewRoot()
+                }
+                composable<Route.MainMap> {
+                    VistaDePruebaMapa()
                 }
             }
+
         }
     }
+
+
 }
