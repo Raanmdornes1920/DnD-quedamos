@@ -48,6 +48,8 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.compose.uiTooling)
+            implementation("org.osmdroid:osmdroid-android:6.1.20")
+            implementation("androidx.compose.ui:ui-viewbinding:1.8.3")
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Cuerpo principal de la D: forma exterior -->
+    <path
+        android:pathData="
+            M28,14
+            L28,94
+            L52,94
+            C72,94 86,78 86,54
+            C86,30 72,14 52,14
+            Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="28"
+                android:startY="14"
+                android:endX="86"
+                android:endY="94">
+                <item android:offset="0.0" android:color="#E8501C" />
+                <item android:offset="1.0" android:color="#C01F20" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Hueco interior blanco de la D -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="
+            M38,26
+            L38,82
+            L52,82
+            C65,82 74,70 74,54
+            C74,38 65,26 52,26
+            Z" />
+
+    <!-- Surco decorativo blanco superior-derecho (característica del logo) -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2.2"
+        android:pathData="
+            M52,16
+            C64,18 76,28 80,42" />
+
+    <!-- Segundo surco decorativo blanco más interior -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.4"
+        android:pathData="
+            M52,22
+            C62,24 72,33 75,46" />
+
+</vector>

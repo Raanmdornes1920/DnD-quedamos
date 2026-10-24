@@ -15,6 +15,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.dnd_quedamos.di.AppContainer
 import com.example.dnd_quedamos.di.DefaultAppContainer
@@ -23,6 +25,7 @@ import com.example.dnd_quedamos.features.evento.presentation.EventoViewModel
 import com.example.dnd_quedamos.features.evento.ui.HomeEventViewRoot
 import com.example.dnd_quedamos.features.mapa.presentation.MapaViewModel
 import com.example.dnd_quedamos.features.mapa.ui.VistaDePruebaMapa
+import kotlinx.coroutines.selects.select
 
 data class Objeto(
     val id: Int,
@@ -57,8 +60,6 @@ fun BottomNavButton(
 @Composable
 fun App( appContainer: AppContainer = DefaultAppContainer() ) {
     val navController = rememberNavController();
-
-
 
     MaterialTheme(
         colorScheme = darkColorScheme() // DnD = dark fantasy vibe
@@ -95,7 +96,6 @@ fun App( appContainer: AppContainer = DefaultAppContainer() ) {
                     BottomNavButton(emoji = "📜", label = "Partidas", selected = false) { }
                     BottomNavButton(emoji = "\uD83C\uDF0E", label = "Mapa", selected = false) {
                         navController.navigate(Route.MainMap) {
-                            // Opcional para evitar acumular decenas de pantallas al saltar de pestaña:
                             popUpTo(Route.Home) { saveState = true }
                             launchSingleTop = true
                             restoreState = true
